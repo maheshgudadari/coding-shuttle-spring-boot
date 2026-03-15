@@ -1,8 +1,6 @@
 package com.aj.springMVC.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,43 +8,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aj.springMVC.Entity.DepartmentEntity;
 import com.aj.springMVC.doa.DepartmentDao;
 import com.aj.springMVC.repository.DepartmentRepo;
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.aj.springMVC.service.DepartmentService;
 
 @RestController
-public class Department {
-	private final DepartmentRepo DeptRepo;
+public class DepartmentController {
+	private final DepartmentService deptService;
 	
-//	GET: /departments
-//	POST: /departments
+
 //	PUT: /departments
-//	DELETE: /departments
-//	GET: /departments/{id}
-	public Department(DepartmentRepo DeptRepo) {
-		this.DeptRepo=DeptRepo;
+
+	public DepartmentController(DepartmentService deptService) {
+		this.deptService =deptService;
 	}
 	
 	@GetMapping(path="/departments")
-	public List<DepartmentEntity> getDepartmentList(){
-		return DeptRepo.findAll();
+	public List<DepartmentDao> getDepartmentList(){
+		return deptService.getAllDepartment();
 	}
 	
 	@GetMapping(path="/departments/{id}")
-	public DepartmentEntity  getDep(@RequestParam Long id) {
-		return DeptRepo.findById(id).orElse(null);
+	public DepartmentDao  getDep(@RequestParam Long id) {
+		System.out.println(id);
+		return deptService.AllDepartmentById(id);
 	}
 	
 	@PostMapping(path="/departments")
-	public DepartmentEntity createDept(@RequestBody DepartmentEntity DepartmentEntity) {
-		
-	 return DeptRepo.save(DepartmentEntity);
+	public DepartmentDao createDept(@RequestBody DepartmentDao inputDepartmentDao) {
+	 
+		System.out.println(inputDepartmentDao);
+		return deptService.saveDepartment(inputDepartmentDao);
+	 
 	}
 	
 	@DeleteMapping(path="/departments/id")
 	public void deleteDept(@RequestParam Long id) {
-		 DeptRepo.deleteById(id);
+//		 DeptRepo.deleteById(id);
 	}
 	
 	

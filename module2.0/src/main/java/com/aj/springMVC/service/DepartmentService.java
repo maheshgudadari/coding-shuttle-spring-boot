@@ -3,14 +3,13 @@ package com.aj.springMVC.service;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
+
+import com.aj.springMVC.DAO.DepartmentDao;
 import com.aj.springMVC.Entity.DepartmentEntity;
-import com.aj.springMVC.doa.DepartmentDao;
 import com.aj.springMVC.repository.DepartmentRepo;
 
-@Service
 public class DepartmentService {
-private final DepartmentRepo DeptRepo;
+	private final DepartmentRepo DeptRepo;
 	
 	public DepartmentService(DepartmentRepo DeptRepo) {
 		
@@ -26,12 +25,13 @@ private final DepartmentRepo DeptRepo;
 	public DepartmentDao AllDepartmentById(Long id){
 		ModelMapper mapper= new ModelMapper();
 		DepartmentEntity deptEntity= DeptRepo.findById(id).orElse(null);
-		return   mapper.map(deptEntity, DepartmentDao.class);
+		return  mapper.map(deptEntity, DepartmentDao.class);
 	}
 	
-	public DepartmentDao saveDepartment(DepartmentDao inputDepartmentDao){
+	public DepartmentDao saveDepartment(){
 		ModelMapper mapper= new ModelMapper();
-		 DepartmentEntity deptEntity = DeptRepo.save(mapper.map(inputDepartmentDao,DepartmentEntity.class));
+		 DepartmentEntity deptEntity = DeptRepo.save(null);
 		return mapper.map(deptEntity, DepartmentDao.class);
 	}
+
 }
