@@ -8,10 +8,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="Student")
+@Getter@Setter
+@NoArgsConstructor@AllArgsConstructor
 public class StudentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +26,11 @@ public class StudentEntity {
 	private String name;
 	
 	@Column(name="professorEntity")
-	@JoinColumn(name="professor_id")
+	@OneToMany
 	private List<ProfessorEntity> proEntity;
 	
 	@Column(name="subjectEntity")
-	@JoinColumn(name="subject_id")
+	@OneToMany
 	private List<SubjectEntity> subEntity;
 	
 	public StudentEntity() {
